@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { push, ref, onValue } from "firebase/database";
-import { database } from "./firebase";
+import { db } from "./firebase";
 
 const App = () => {
   const [inputValue, setInputValue] = useState("");
@@ -14,7 +14,7 @@ const App = () => {
     if (inputValue === "") {
       alert("Write something!");
     } else {
-      push(ref(database, "messages"), {
+      push(ref(db, "messages"), {
         text: inputValue,
       })
         .then(() => {
@@ -28,7 +28,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const messagesRef = ref(database, "messages");
+    const messagesRef = ref(db, "messages");
 
     const unsubscribe = onValue(messagesRef, (snapshot) => {
       const data = snapshot.val();
